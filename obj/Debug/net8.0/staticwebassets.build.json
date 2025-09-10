@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "NF0YNEoAxeiPEk3Yda71gn32tRnQzt3QR+JuLSVLPEA=",
+  "Source": "moonVendingApi",
+  "BasePath": "_content/moonVendingApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
