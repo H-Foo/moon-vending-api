@@ -1,26 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace moonVendingApi.Controllers;
-
 [ApiController]
-[Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+[Route("api/[controller]")]
+public class ReceiptController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
 
-    private readonly ILogger<WeatherForecastController> _logger;
+    private readonly IReceiptService _receipt;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public ReceiptController(IReceiptService receipt)
     {
-        _logger = logger;
+        _receipt = receipt;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public string Get()
+    [HttpPost]
+    [Route("CreateReceiptRecord")]
+    public async Task<IActionResult> CreateReceiptRecord(string userInput)
     {
-        return "Hi there";
+        return Ok(await _receipt.AddReceipt(userInput));
     }
 }
