@@ -30,3 +30,4 @@
 /Users/foo/DevProjects/VendingMachine/backend/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.moonVendingApi.props
 /Users/foo/DevProjects/VendingMachine/backend/obj/Debug/net8.0/staticwebassets.pack.json
 /Users/foo/DevProjects/VendingMachine/backend/obj/Debug/net8.0/moonVendingApi.csproj.CopyComplete
+/Users/foo/DevProjects/VendingMachine/backend/obj/Debug/net8.0/moonVendingApi.sourcelink.json

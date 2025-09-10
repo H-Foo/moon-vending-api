@@ -1,0 +1,11 @@
+/Users/foo/DevProjects/VendingMachine/backend/publish/moonVendingApi
+/Users/foo/DevProjects/VendingMachine/backend/publish/appsettings.Development.json
+/Users/foo/DevProjects/VendingMachine/backend/publish/appsettings.json
+/Users/foo/DevProjects/VendingMachine/backend/publish/moonVendingApi.dll
+/Users/foo/DevProjects/VendingMachine/backend/publish/moonVendingApi.deps.json
+/Users/foo/DevProjects/VendingMachine/backend/publish/moonVendingApi.runtimeconfig.json
+/Users/foo/DevProjects/VendingMachine/backend/publish/moonVendingApi.pdb
+/Users/foo/DevProjects/VendingMachine/backend/publish/Microsoft.OpenApi.dll
+/Users/foo/DevProjects/VendingMachine/backend/publish/Swashbuckle.AspNetCore.Swagger.dll
+/Users/foo/DevProjects/VendingMachine/backend/publish/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/foo/DevProjects/VendingMachine/backend/publish/Swashbuckle.AspNetCore.SwaggerUI.dll
