@@ -12,8 +12,8 @@ public class ReceiptController : ControllerBase
         _receipt = receipt;
     }
 
-    [HttpPost]
-    [Route("CreateReceiptRecord")]
+    [HttpGet]
+    [Route("Create")]
     public async Task<IActionResult> CreateReceiptRecord(string userInput)
     {
         return Ok(await _receipt.AddReceipt(userInput));

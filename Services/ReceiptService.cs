@@ -1,44 +1,51 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
 using System.Text.RegularExpressions;
+using System.Net;
 
 public interface IReceiptService
 {
     Task<string> AddReceipt(string receiptNo);
 }
 
-// =====
-
 public class ReceiptService : IReceiptService
 {
     private readonly VendingContext _ctx;
+    private readonly ILogger<ReceiptService> _logger;
 
-    public ReceiptService(VendingContext context)
+    public ReceiptService(VendingContext context, ILogger<ReceiptService> logger)
     {
         _ctx = context;
+        _logger = logger;
     }
 
     public async Task<string> AddReceipt(string receiptNo)
     {
-        var location = receiptNo.Substring(0, 3).ToUpper();
+        // decode string
+        var decoded = WebUtility.UrlDecode(receiptNo);
 
-        if (IsReceiptNoValid(receiptNo.Substring(4)) == false)
+        var location = decoded.Substring(0, 3).ToUpper();
+
+        if (IsReceiptNoValid(decoded.Substring(4)) == false){
+            _logger.LogError("Unrecognized receipt number: " + receiptNo + " | decoded: " + decoded);
             throw new Exception("Unrecognized receipt Number.");
+        }
 
         var receipt = new Receipt
         {
-            ReceiptNo = receiptNo.Substring(4),
+            ReceiptNo = decoded.Substring(4),
             VendingBoxId = (int)Enum.Parse<BoxLocation>(location),
             DateAdded = DateTime.Now
         };
         _ctx.Receipt.Add(receipt);
 
-        if (await _ctx.SaveChangesAsync() <= 0) throw new Exception("Failed to add new record receipt for " + receiptNo);
+        if (await _ctx.SaveChangesAsync() <= 0){
+            _logger.LogError("Failed to add new record for: " + decoded);
+            throw new Exception("Failed to add new record receipt for " + decoded);
+        }
 
         // return pin from db
         var pinNums = await _ctx.PinHistory.Where(p => p.VendingBoxId == receipt.VendingBoxId && p.ExpiryDate >= DateTime.Now).ToListAsync();
         var pin = pinNums.Where(p => !p.IsExpired).Select(p => p.Pin).FirstOrDefault();
-        Console.WriteLine("Pin:" + pin);
 
         return pin;
 
