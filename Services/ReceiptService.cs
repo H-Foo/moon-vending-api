@@ -61,7 +61,7 @@ public class ReceiptService : IReceiptService
         if (!Regex.IsMatch(merchantNo, @"^[A-Za-z0-9]{8}$"))
             return false;
 
-        if (ewalletNo.Length != 6 || !ewalletNo.All(char.IsDigit))
+        if (ewalletNo.Length != 7 || !ewalletNo.All(char.IsDigit))
             return false;
         
         return true;
