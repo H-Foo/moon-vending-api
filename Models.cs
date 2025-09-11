@@ -20,6 +20,13 @@ public class PinClean
     public bool IsExpired => ExpiryDate <= DateTime.Now;
 }
 
+public class PinDto
+{
+    public string pin { get; set; }
+    public string location { get; set; }
+    public int validUntilDays { get; set; }
+}
+
 public class Receipt
 {
     public int SaleId { get; set; }
