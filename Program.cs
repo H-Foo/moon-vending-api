@@ -7,11 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+var vercelPolicy = "_allowVercelOrigin";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("VercelPolicy", policy =>
+    options.AddPolicy(name: vercelPolicy, policy =>
     {
-        policy.WithOrigins("https://moon-vending-box.vercel.app").AllowAnyHeader().AllowAnyMethod();
+        policy.WithOrigins("https://moon-vending-box.vercel.app", "https://moon-vending-box-h-foos-projects.vercel.app").AllowAnyHeader().AllowAnyMethod();
     });
 });
 
@@ -37,7 +39,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors();
+app.UseCors(vercelPolicy);
 
 app.UseAuthentication();
 app.UseAuthorization();
