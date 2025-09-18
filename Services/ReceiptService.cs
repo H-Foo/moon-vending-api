@@ -45,7 +45,8 @@ public class ReceiptService : IReceiptService
 
         // return pin from db
         var pinNums = await _ctx.PinHistory.Where(p => p.VendingBoxId == receipt.VendingBoxId && p.ExpiryDate >= DateTime.Now).ToListAsync();
-        var pin = pinNums.Where(p => !p.IsExpired).Select(p => p.Pin).FirstOrDefault();
+        var pin = pinNums.OrderByDescending(p => p.ExpiryDate).Where(p => !p.IsExpired).Select(p => p.Pin).FirstOrDefault();
+        
 
         return pin;
 

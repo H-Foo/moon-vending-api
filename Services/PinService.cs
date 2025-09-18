@@ -35,7 +35,7 @@ public class PinService : IPinService
             Pin = pin,
             VendingBoxId = (int)Enum.Parse<BoxLocation>(boxLocation),
             DateAdded = DateTime.Now,
-            ExpiryDate = DateTime.Now.AddDays(validFor)
+            ExpiryDate = DateTime.Now.AddDays(validFor).Date
         };
         _ctx.PinHistory.Add(pinRecord);
 
