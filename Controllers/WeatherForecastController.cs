@@ -19,10 +19,10 @@ public class ReceiptController : ControllerBase
         return Ok(await _receipt.AddReceipt(userInput));
     }
 
-    [HttpGet]
-    [Route("WakeUp")]
-    public Task<IActionResult> WakeService()
+    [HttpGet("WakeUp")]
+    [HttpHead("WakeUp")]
+    public IActionResult WakeService()
     {
-        return Task.FromResult<IActionResult>(Ok("I'm awake"));
+        return Ok("I'm awake");
     }
 }
