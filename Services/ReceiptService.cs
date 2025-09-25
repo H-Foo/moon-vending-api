@@ -5,6 +5,7 @@ using System.Net;
 public interface IReceiptService
 {
     Task<string> AddReceipt(string receiptNo);
+    Task<string> GetLatestRecord();
 }
 
 public class ReceiptService : IReceiptService
@@ -49,7 +50,11 @@ public class ReceiptService : IReceiptService
         
 
         return pin;
+    }
 
+    public async Task<string> GetLatestRecord()
+    {
+        return await _ctx.Receipt.OrderByDescending(r => r.DateAdded).Select(r => r.ReceiptNo).FirstOrDefaultAsync() ?? "at least im here.";
     }
 
     private bool IsReceiptNoValid(string receiptNo)
@@ -64,7 +69,7 @@ public class ReceiptService : IReceiptService
 
         if (ewalletNo.Length != 7 || !ewalletNo.All(char.IsDigit))
             return false;
-        
+
         return true;
     }
 }

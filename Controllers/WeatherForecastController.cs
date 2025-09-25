@@ -21,8 +21,8 @@ public class ReceiptController : ControllerBase
 
     [HttpGet("WakeUp")]
     [HttpHead("WakeUp")]
-    public IActionResult WakeService()
+    public async Task<IActionResult> WakeService()
     {
-        return Ok("I'm awake");
+        return Ok(await _receipt.GetLatestRecord());
     }
 }
