@@ -23,6 +23,14 @@ public class ReceiptController : ControllerBase
     [HttpHead("WakeUp")]
     public async Task<IActionResult> WakeService()
     {
+        return Ok("im awake");
+    }
+
+    [HttpGet("DontSleep")]
+    [HttpHead("DontSleep")]
+    public async Task<IActionResult> WakeDbService()
+    {
         return Ok(await _receipt.GetLatestRecord());
     }
+
 }
