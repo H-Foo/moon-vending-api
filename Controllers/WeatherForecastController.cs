@@ -13,17 +13,18 @@ public class ReceiptController : ControllerBase
     }
 
     [HttpGet]
+    [HttpHead]
     [Route("Create")]
     public async Task<IActionResult> CreateReceiptRecord(string userInput)
     {
-        return Ok(await _receipt.AddReceipt(userInput));
-    }
 
-    [HttpGet("WakeUp")]
-    [HttpHead("WakeUp")]
-    public async Task<IActionResult> WakeService()
-    {
-        return Ok("im awake");
+        if (HttpContext.Request.Method == HttpMethods.Head)
+        {
+            HttpContext.Response.Headers["X-Service-Status"] = "Am Awake";
+            return Ok();
+        }
+
+        return Ok(await _receipt.AddReceipt(userInput));
     }
 
     [HttpGet("DontSleep")]
