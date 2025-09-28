@@ -22,7 +22,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<VendingContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection")));
+//builder.Services.AddDbContext<VendingContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection")));
+builder.Services.AddDbContext<VendingContext>(opt => opt.UseInMemoryDatabase("VendingContext"));
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddScoped<IReceiptService, ReceiptService>();
