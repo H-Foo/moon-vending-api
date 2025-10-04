@@ -17,14 +17,14 @@ public class PinController : ControllerBase
 
     [HttpPost]
     [Route("AddPin")]
-    public async Task<IActionResult> CreateReceiptRecord(PinDto pinDto)
+    public async Task<IActionResult> CreateReceiptRecord(PinClean pinDto)
     {
         if (!Request.Headers.TryGetValue("X-Api-Key", out var apiKey) || apiKey != _phrase)
         {
             return Unauthorized("who r u.");
         }
 
-        return Ok(await _pinService.AddPin(pinDto.pin, pinDto.location, pinDto.validUntilDays));
+        return Ok(await _pinService.AddPin(pinDto.Pin, pinDto.VendingBoxId));
     }
 
     [HttpGet]
@@ -39,15 +39,4 @@ public class PinController : ControllerBase
         return Ok(await _pinService.GetActivePins(location));
     }
 
-    [HttpGet]
-    [Route("GetAllRecords")]
-    public async Task<IActionResult> GetAllRecords()
-    {
-        if (!Request.Headers.TryGetValue("X-Api-Key", out var apiKey) || apiKey != _phrase)
-        {
-            return Unauthorized("who r u.");
-        }
-
-        return Ok(await _pinService.GetAllRecords());
-    }
 }

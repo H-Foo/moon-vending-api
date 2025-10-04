@@ -6,25 +6,12 @@ public class PinHistory
     public string Pin { get; set; }
     public int VendingBoxId { get; set; }
     public DateTime DateAdded { get; set; }
-    public DateTime ExpiryDate { get; set; }
-    [NotMapped]
-    public bool IsExpired => ExpiryDate <= DateTime.Now;
 }
 
 public class PinClean
 {
     public string Pin { get; set; }
     public string VendingBoxId { get; set; }
-    public DateTime DateAdded { get; set; }
-    public DateTime ExpiryDate { get; set; }
-    public bool IsExpired => ExpiryDate <= DateTime.Now;
-}
-
-public class PinDto
-{
-    public string pin { get; set; }
-    public string location { get; set; }
-    public int validUntilDays { get; set; }
 }
 
 public class Receipt

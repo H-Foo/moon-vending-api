@@ -21,13 +21,14 @@ public class ReceiptService : IReceiptService
 
     public async Task<string> AddReceipt(string receiptNo)
     {
+        Console.WriteLine("INFO: [AddReceipt] - receiptNo passed is " + receiptNo);
         // decode string
         var decoded = WebUtility.UrlDecode(receiptNo);
 
         var location = decoded.Substring(0, 3).ToUpper();
 
         if (IsReceiptNoValid(decoded.Substring(4)) == false){
-            _logger.LogError("Unrecognized receipt number: " + receiptNo + " | decoded: " + decoded);
+            Console.WriteLine("Unrecognized receipt number: " + receiptNo + " | decoded: " + decoded);
             throw new Exception("Unrecognized receipt Number.");
         }
 
@@ -40,13 +41,15 @@ public class ReceiptService : IReceiptService
         _ctx.Receipt.Add(receipt);
 
         if (await _ctx.SaveChangesAsync() <= 0){
-            _logger.LogError("Failed to add new record for: " + decoded);
+            Console.WriteLine("Failed to add new record for: " + decoded);
             throw new Exception("Failed to add new record receipt for " + decoded);
         }
 
         // return pin from db
-        var pinNums = await _ctx.PinHistory.Where(p => p.VendingBoxId == receipt.VendingBoxId && p.ExpiryDate >= DateTime.Now).ToListAsync();
-        var pin = pinNums.OrderByDescending(p => p.ExpiryDate).Where(p => !p.IsExpired).Select(p => p.Pin).FirstOrDefault();
+        var pinNums = await _ctx.PinHistory.Where(p => p.VendingBoxId == receipt.VendingBoxId).ToListAsync();
+        if (!pinNums.Any()) throw new Exception("No pin exist for vending box at " + location);
+
+        var pin = pinNums.OrderByDescending(p => p.DateAdded).Select(p => p.Pin).FirstOrDefault();
         
 
         return pin;
