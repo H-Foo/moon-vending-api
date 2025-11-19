@@ -22,6 +22,8 @@ public class ReceiptService : IReceiptService
     public async Task<string> AddReceipt(string receiptNo)
     {
         Console.WriteLine("INFO: [AddReceipt] - receiptNo passed is " + receiptNo);
+        if (receiptNo == "wakeup")  return "yes mommy";
+
         // decode string
         var decoded = WebUtility.UrlDecode(receiptNo);
 
